@@ -1,22 +1,26 @@
-import Link from 'next/link';
-import Head from 'next/head';
+import React from 'react';
 import clsx from 'clsx';
-import Typography from "@material-ui/core/Typography";
-import {makeStyles} from "@material-ui/core";
-import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/core/SvgIcon/SvgIcon";
-import Badge from "@material-ui/core/Badge/Badge";
-import Drawer from "@material-ui/core/Drawer";
-import Divider from "@material-ui/core/Divider";
+import {makeStyles} from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Badge from '@material-ui/core/Badge';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Link from '@material-ui/core/Link';
+import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import List from "@material-ui/core/List";
-import {mainListItems, secondaryListItems} from "./listItems";
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Container from "@material-ui/core/Container";
+import {mainListItems, secondaryListItems} from './listItems';
+import Chart from './Chart';
+import Deposits from './Deposits';
+import Orders from './Orders';
 
 function Copyright() {
   return (
@@ -101,9 +105,18 @@ const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
   },
+  paper: {
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+  },
+  fixedHeight: {
+    height: 240,
+  },
 }));
 
-const Layout = ({children}) => {
+export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -112,10 +125,11 @@ const Layout = ({children}) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
-
     <div className={classes.root}>
+      <CssBaseline/>
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -157,11 +171,29 @@ const Layout = ({children}) => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer}/>
         <Container maxWidth="lg" className={classes.container}>
-          {children}
+          <Grid container spacing={3}>
+            {/* Chart */}
+            <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <Chart/>
+              </Paper>
+            </Grid>
+            {/* Recent Deposits */}
+            <Grid item xs={12} md={4} lg={3}>
+              <Paper className={fixedHeightPaper}>
+                <Deposits/>
+              </Paper>
+            </Grid>
+            {/* Recent Orders */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Orders/>
+              </Paper>
+            </Grid>
+          </Grid>
         </Container>
+        <Copyright/>
       </main>
     </div>
   );
-};
-
-export default Layout;
+}
