@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '../src/Link';
 import Head from 'next/head';
 import clsx from 'clsx';
 import Typography from "@material-ui/core/Typography";
@@ -8,7 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import MenuIcon from '@material-ui/icons/Menu';
 import Badge from "@material-ui/core/Badge/Badge";
 import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
